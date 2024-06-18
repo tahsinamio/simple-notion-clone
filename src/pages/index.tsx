@@ -1,118 +1,195 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import { useState, useEffect, useRef } from "react";
+import { Block, TextBlock, ImageBlock } from "../types";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
-  return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+const Home = () => {
+  const [blocks, setBlocks] = useState<Block[]>([]);
+  const [newFormat, setNewFormat] = useState<"H1" | "H2" | "H3" | "paragraph">(
+    "paragraph"
   );
-}
+  const [newImageSrc, setNewImageSrc] = useState<string>("");
+  const [newImageWidth, setNewImageWidth] = useState<number>(100);
+  const [newImageHeight, setNewImageHeight] = useState<number>(100);
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [currentFormat, setCurrentFormat] = useState<"H1" | "H2" | "H3" | "paragraph">("paragraph");
+  const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
+  const [placeholder, setPlaceholder] = useState<string>("Type '/' for commands");
+  const [content, setContent] = useState<string>("");
+  const contentEditableRef = useRef<HTMLDivElement>(null);
+
+  const options = ["H1", "H2", "H3", "paragraph", "image"];
+
+  useEffect(() => {
+    fetch("/api/blocks")
+      .then((res) => res.json())
+      .then((data) => setBlocks(data));
+  }, []);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "/") {
+      setShowDropdown(true);
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (showDropdown) {
+        handleOptionSelect(options[highlightedIndex]);
+      } else if (selectedOption === "image") {
+        addImageBlock();
+      } else {
+        addTextBlock(currentFormat);
+      }
+    } else if (e.key === "ArrowDown" && showDropdown) {
+      setHighlightedIndex((prevIndex) => (prevIndex + 1) % options.length);
+    } else if (e.key === "ArrowUp" && showDropdown) {
+      setHighlightedIndex((prevIndex) => (prevIndex - 1 + options.length) % options.length);
+    }
+  };
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const text = e.clipboardData.getData("text/plain");
+    const selection = window.getSelection();
+    if (!selection.rangeCount) return;
+    selection.deleteFromDocument();
+    selection.getRangeAt(0).insertNode(document.createTextNode(text));
+    setContent(contentEditableRef.current?.innerText || "");
+  };
+
+  const handleOptionSelect = (option: string) => {
+    setSelectedOption(option);
+    setShowDropdown(false);
+    setHighlightedIndex(0); // Reset highlighted index
+    if (option === "image") {
+      setPlaceholder("Paste image URL and press Enter");
+      setContent("");
+      if (contentEditableRef.current) {
+        contentEditableRef.current.innerText = "";
+      }
+    } else {
+      // Change the input style
+      setCurrentFormat(option as "H1" | "H2" | "H3" | "paragraph");
+      setContent("");
+      if (contentEditableRef.current) {
+        contentEditableRef.current.style.fontSize =
+          option === "H1"
+            ? "text-4xl"
+            : option === "H2"
+            ? "text-3xl"
+            : option === "H3"
+            ? "text-2xl"
+            : "text-base";
+        // Clear the content to remove the slash
+        contentEditableRef.current.innerText = "";
+      }
+    }
+  };
+
+  const addTextBlock = async (format: string) => {
+    const newBlock: TextBlock = {
+      id: Date.now().toString(),
+      type: "text",
+      value: contentEditableRef.current?.innerText || "",
+      format: format as "H1" | "H2" | "H3" | "paragraph",
+    };
+    const res = await fetch("/api/blocks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newBlock),
+    });
+    const data = await res.json();
+    setBlocks([...blocks, data]);
+    setContent("");
+    if (contentEditableRef.current) {
+      contentEditableRef.current.innerText = "";
+      contentEditableRef.current.style.fontSize = "text-base"; // Reset to default
+    }
+  };
+
+  const addImageBlock = async () => {
+    const newBlock: ImageBlock = {
+      id: Date.now().toString(),
+      type: "image",
+      src: contentEditableRef.current?.innerText || "",
+      width: newImageWidth,
+      height: newImageHeight,
+    };
+    const res = await fetch("/api/blocks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newBlock),
+    });
+    const data = await res.json();
+    setBlocks([...blocks, data]);
+    setContent("");
+    if (contentEditableRef.current) {
+      contentEditableRef.current.innerText = "";
+      setPlaceholder("Type '/' for commands");
+    }
+  };
+
+  return (
+    <div className="bg-gray-100 min-h-screen text-black">
+      <h1 className="text-4xl font-bold">My Notion Clone</h1>
+      {blocks.map((block) => (
+        <div key={block.id}>
+          {block.type === "text" && (
+            <div
+              className={
+                block.format === "H1"
+                  ? "text-4xl"
+                  : block.format === "H2"
+                  ? "text-3xl"
+                  : block.format === "H3"
+                  ? "text-2xl"
+                  : "text-base"
+              }
+            >
+              {block.value}
+            </div>
+          )}
+          {block.type === "image" && (
+            <img
+              src={block.src}
+              width={block.width}
+              height={block.height}
+              alt="User uploaded"
+            />
+          )}
+        </div>
+      ))}
+      <div>
+        <div
+          contentEditable
+          ref={contentEditableRef}
+          onKeyDown={handleKeyDown}
+          onInput={(e) => setContent(e.currentTarget.innerText)}
+          onPaste={handlePaste}
+          className="border border-gray-300 p-2 min-h-10 bg-white relative"
+        >
+          {content === "" && (
+            <div className="absolute top-2 left-2 text-gray-400 pointer-events-none">
+              {placeholder}
+            </div>
+          )}
+        </div>
+        {showDropdown && (
+          <div className="border border-gray-300 bg-white">
+            {options.map((option, index) => (
+              <div
+                key={option}
+                className={`p-2 ${
+                  highlightedIndex === index ? "bg-gray-200" : "bg-white"
+                } hover:bg-gray-100 cursor-pointer`}
+                onMouseEnter={() => setHighlightedIndex(index)}
+                onClick={() => handleOptionSelect(option)}
+              >
+                {option}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Home;
