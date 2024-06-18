@@ -67,7 +67,6 @@ const Home = () => {
     } else {
       // Change the input style
       setCurrentFormat(option as "H1" | "H2" | "H3" | "paragraph");
-      setContent("");
       if (contentEditableRef.current) {
         contentEditableRef.current.style.fontSize =
           option === "H1"
@@ -127,66 +126,92 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen text-black">
-      <h1 className="text-4xl font-bold">My Notion Clone</h1>
-      {blocks.map((block) => (
-        <div key={block.id}>
-          {block.type === "text" && (
-            <div
-              className={
-                block.format === "H1"
-                  ? "text-4xl"
-                  : block.format === "H2"
-                  ? "text-3xl"
-                  : block.format === "H3"
-                  ? "text-2xl"
-                  : "text-base"
-              }
-            >
-              {block.value}
-            </div>
-          )}
-          {block.type === "image" && (
-            <img
-              src={block.src}
-              width={block.width}
-              height={block.height}
-              alt="User uploaded"
-            />
-          )}
-        </div>
-      ))}
-      <div>
-        <div
-          contentEditable
-          ref={contentEditableRef}
-          onKeyDown={handleKeyDown}
-          onInput={(e) => setContent(e.currentTarget.innerText)}
-          onPaste={handlePaste}
-          className="border border-gray-300 p-2 min-h-10 bg-white relative"
-        >
-          {content === "" && (
-            <div className="absolute top-2 left-2 text-gray-400 pointer-events-none">
-              {placeholder}
-            </div>
-          )}
-        </div>
-        {showDropdown && (
-          <div className="border border-gray-300 bg-white">
-            {options.map((option, index) => (
+    <div className="bg-gray-100 min-h-screen flex items-center justify-center text-black">
+      <div className="w-full max-w-2xl">
+        <h1 className="text-4xl font-bold text-center">My Notion Clone</h1>
+        {blocks.map((block) => (
+          <div key={block.id}>
+            {block.type === "text" && (
               <div
-                key={option}
-                className={`p-2 ${
-                  highlightedIndex === index ? "bg-gray-200" : "bg-white"
-                } hover:bg-gray-100 cursor-pointer`}
-                onMouseEnter={() => setHighlightedIndex(index)}
-                onClick={() => handleOptionSelect(option)}
+                className={
+                  block.format === "H1"
+                    ? "text-4xl"
+                    : block.format === "H2"
+                    ? "text-3xl"
+                    : block.format === "H3"
+                    ? "text-2xl"
+                    : "text-base"
+                }
               >
-                {option}
+                {block.value}
               </div>
-            ))}
+            )}
+            {block.type === "image" && (
+              <img
+                src={block.src}
+                width={block.width}
+                height={block.height}
+                alt="User uploaded"
+              />
+            )}
           </div>
-        )}
+        ))}
+        <div>
+          <div
+            contentEditable
+            ref={contentEditableRef}
+            onKeyDown={handleKeyDown}
+            onInput={(e) => {
+              const text = e.currentTarget.innerText;
+              setContent(text);
+              if (text.length > 0) {
+                setPlaceholder("");
+              }
+            }}
+            onPaste={handlePaste}
+            className="border border-gray-300 p-2 min-h-10 bg-white relative"
+          >
+            {content === "" && placeholder && (
+              <div className="absolute top-2 left-2 text-gray-400 pointer-events-none">
+                {placeholder}
+              </div>
+            )}
+          </div>
+          {showDropdown && (
+            <div className="border border-gray-300 bg-white">
+              {options.map((option, index) => (
+                <div
+                  key={option}
+                  className={`p-2 ${
+                    highlightedIndex === index ? "bg-gray-200" : "bg-white"
+                  } hover:bg-gray-100 cursor-pointer`}
+                  onMouseEnter={() => setHighlightedIndex(index)}
+                  onClick={() => handleOptionSelect(option)}
+                >
+                  {option}
+                </div>
+              ))}
+            </div>
+          )}
+          {selectedOption === "image" && (
+            <div className="flex mt-2">
+              <input
+                type="number"
+                value={newImageWidth}
+                onChange={(e) => setNewImageWidth(Number(e.target.value))}
+                placeholder="Width"
+                className="border border-gray-300 p-2 mr-2"
+              />
+              <input
+                type="number"
+                value={newImageHeight}
+                onChange={(e) => setNewImageHeight(Number(e.target.value))}
+                placeholder="Height"
+                className="border border-gray-300 p-2"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
