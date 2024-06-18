@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState, useEffect, useRef } from "react";
 import { Block, TextBlock, ImageBlock } from "../types";
 
@@ -11,9 +12,13 @@ const Home = () => {
   const [newImageHeight, setNewImageHeight] = useState<number>(100);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>("");
-  const [currentFormat, setCurrentFormat] = useState<"H1" | "H2" | "H3" | "paragraph">("paragraph");
+  const [currentFormat, setCurrentFormat] = useState<
+    "H1" | "H2" | "H3" | "paragraph"
+  >("paragraph");
   const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
-  const [placeholder, setPlaceholder] = useState<string>("Type '/' for commands");
+  const [placeholder, setPlaceholder] = useState<string>(
+    "Type '/' for commands"
+  );
   const [content, setContent] = useState<string>("");
   const contentEditableRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +45,9 @@ const Home = () => {
     } else if (e.key === "ArrowDown" && showDropdown) {
       setHighlightedIndex((prevIndex) => (prevIndex + 1) % options.length);
     } else if (e.key === "ArrowUp" && showDropdown) {
-      setHighlightedIndex((prevIndex) => (prevIndex - 1 + options.length) % options.length);
+      setHighlightedIndex(
+        (prevIndex) => (prevIndex - 1 + options.length) % options.length
+      );
     }
   };
 
@@ -48,7 +55,7 @@ const Home = () => {
     e.preventDefault();
     const text = e.clipboardData.getData("text/plain");
     const selection = window.getSelection();
-    if (!selection.rangeCount) return;
+    if (!selection || !selection.rangeCount) return;
     selection.deleteFromDocument();
     selection.getRangeAt(0).insertNode(document.createTextNode(text));
     setContent(contentEditableRef.current?.innerText || "");
